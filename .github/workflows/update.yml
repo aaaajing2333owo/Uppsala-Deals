@@ -1,0 +1,32 @@
+name: Auto Update Deals
+
+on:
+  schedule:
+    - cron: '0 2 * * 1' # 每周一凌晨2点运行
+  workflow_dispatch: # 允许网页上手动点击运行测试
+
+permissions:
+  contents: write # 赋予机器人写入文件的权限
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v3
+        
+      - name: 配置 Python 环境
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+          
+      - name: 运行爬虫脚本
+        run: python scraper.py
+        
+      - name: 提交并推送新数据
+        run: |
+          git config --global user.name 'GitHub Action Bot'
+          git config --global user.email 'action@github.com'
+          git add data.json
+          # 检查是否有内容变更，有则提交，无则跳过
+          git diff --quiet && git diff --staged --quiet || (git commit -m "自动更新本周打折数据" && git push)
