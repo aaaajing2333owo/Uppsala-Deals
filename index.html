@@ -77,14 +77,22 @@
         let selectedStores = new Set();
 
         // 动态抓取同一目录下的 data.json
- fetch('[https://raw.githubusercontent.com/aaaajing2333owo/Uppsala-Deals/main/data.json](https://raw.githubusercontent.com/aaaajing2333owo/Uppsala-Deals/main/data.json)')
-            .then(response => response.json())
+// 动态加上当前时间戳 (?t=xxx)，强制浏览器每次都去拉取最新数据，绕过缓存
+        fetch('data.json?t=' + new Date().getTime())
+            .then(response => {
+                if (!response.ok) throw new Error('网络请求报错');
+                return response.json();
+            })
             .then(data => {
                 products = data;
+                // 数据加载成功后，替换掉占位符
                 document.getElementById('home-products-container').innerHTML = products.slice(0, 4).map(createCardHTML).join('');
                 renderAllItems();
             })
-            .catch(error => console.error('加载数据失败:', error));
+            .catch(error => {
+                console.error('加载数据失败:', error);
+                document.getElementById('home-products-container').innerHTML = '<div class="text-[12px] text-red-500 py-4 col-span-2">数据读取失败，请检查文件路径</div>';
+            });
 
         function toggleStoreFilter(storeName) {
             if (storeName === 'all') {
