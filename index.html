@@ -22,9 +22,10 @@
             <header class="bg-[#8A151B] text-white pt-10 pb-3 px-4 sticky top-0 z-50 shadow-md">
                 <div class="flex justify-between items-center mb-3">
                     <h1 class="text-[17px] font-black tracking-tight font-sans">UPPSALA DEALS</h1>
-                    <div class="flex bg-black/20 rounded-full p-0.5 text-[10px]">
-                        <button class="px-2 py-1 bg-white text-[#8A151B] rounded-full font-bold shadow-sm">本周</button>
-                        <button class="px-2 py-1 text-white/80 rounded-full font-medium">下周</button>
+                    <!-- 时间胶囊交互 -->
+                    <div class="flex bg-black/20 rounded-full p-0.5 text-[10px]" id="time-toggle-home">
+                        <button onclick="toggleUIState('time', 'this', 'time-toggle-home')" class="px-2 py-1 bg-white text-[#8A151B] rounded-full font-bold shadow-sm transition-colors">本周</button>
+                        <button onclick="toggleUIState('time', 'next', 'time-toggle-home')" class="px-2 py-1 text-white/80 rounded-full font-medium transition-colors">下周</button>
                     </div>
                 </div>
                 <div class="relative w-full">
@@ -36,23 +37,35 @@
             </header>
 
             <main class="px-4 mt-4 space-y-5">
-                <!-- 本周周报 -->
+                <!-- 完整的本周周报 -->
                 <section class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
                     <h2 class="text-base font-black text-gray-900 mb-3 tracking-wide">本周周报</h2>
                     <div class="space-y-3 text-[13px] leading-snug text-gray-600">
-                        <div><span class="font-black text-[#B8860B] block mb-0.5">特别关心监测</span>您关注的 Garant 牛绞肉本周在 Hemköp 降至 89 kr/kg，触及 30 天史低。</div>
+                        <div>
+                            <span class="font-black text-[#B8860B] block mb-0.5">特别关心监测</span>
+                            您关注的 Garant 牛绞肉本周在 Hemköp 降至 89 kr/kg，触及 30 天史低。Oatly 咖啡大师燕麦奶全城均无促销，按需原价购买即可。
+                        </div>
                         <div class="h-px bg-gray-100 w-full"></div>
-                        <div><span class="font-black text-[#B8860B] block mb-0.5">全城品类走势</span>受秋收季清库存影响，本地根茎类蔬菜价格大幅跳水，Willys 网袋装为全城最低。</div>
+                        <div>
+                            <span class="font-black text-[#B8860B] block mb-0.5">时令与主题促销</span>
+                            本周迎双节点：11月7日巧克力蛋糕日及11月8日父亲节。ICA 与 Willys 的烘焙区及排块巧克力有集中深度折扣，建议组合购买。
+                        </div>
+                        <div class="h-px bg-gray-100 w-full"></div>
+                        <div>
+                            <span class="font-black text-[#B8860B] block mb-0.5">全城品类走势</span>
+                            受秋收季清库存影响，本地根茎类蔬菜价格大幅跳水，Willys 网袋装为全城最低。高蛋白肉禽方面，ICA City 的冷鲜鸡胸肉处于均价线以下。
+                        </div>
                     </div>
                 </section>
 
-                <!-- 超市画报 -->
+                <!-- 超市画报 (补全COOP) -->
                 <section>
-                    <div class="grid grid-cols-4 gap-2">
+                    <div class="grid grid-cols-5 gap-2">
                         <div class="h-10 bg-white rounded-lg flex items-center justify-center shadow-sm font-black text-gray-800 text-[11px] tracking-wider border border-gray-100">ICA</div>
                         <div class="h-10 bg-white rounded-lg flex items-center justify-center shadow-sm font-black text-gray-800 text-[11px] tracking-wider border border-gray-100">HEMKÖP</div>
                         <div class="h-10 bg-white rounded-lg flex items-center justify-center shadow-sm font-black text-gray-800 text-[11px] tracking-wider border border-gray-100">WILLYS</div>
                         <div class="h-10 bg-white rounded-lg flex items-center justify-center shadow-sm font-black text-gray-800 text-[11px] tracking-wider border border-gray-100">LIDL</div>
+                        <div class="h-10 bg-white rounded-lg flex items-center justify-center shadow-sm font-black text-gray-800 text-[11px] tracking-wider border border-gray-100">COOP</div>
                     </div>
                 </section>
 
@@ -60,8 +73,195 @@
                 <section>
                     <div class="flex justify-between items-end mb-3">
                         <h2 class="text-[15px] font-black text-gray-900 tracking-wide">精选超值折扣</h2>
-                        <div class="flex bg-gray-200 rounded-full p-0.5 text-[9px]">
-                            <button class="px-2 py-1 bg-white text-gray-900 rounded-full font-bold shadow-sm">离我最近</button>
-                            <button class="px-2 py-1 text-gray-500 rounded-full font-medium">3km内</button>
+                        <!-- 距离胶囊交互 -->
+                        <div class="flex bg-gray-200 rounded-full p-0.5 text-[9px]" id="distance-toggle">
+                            <button onclick="toggleUIState('distance', 'nearest', 'distance-toggle')" class="px-2 py-1 bg-white text-gray-900 rounded-full font-bold shadow-sm transition-colors">离我最近</button>
+                            <button onclick="toggleUIState('distance', '3km', 'distance-toggle')" class="px-2 py-1 text-gray-500 rounded-full font-medium transition-colors">3km内</button>
                         </div>
                     </div>
+                    
+                    <div id="home-products-container" class="grid grid-cols-2 gap-2">
+                        <div class="text-[12px] text-gray-500 py-4 col-span-2">正在从云端获取最新折扣...</div>
+                    </div>
+
+                    <button onclick="toggleView('all-items-view')" class="w-full mt-3 py-2.5 border border-[#8A151B] text-[#8A151B] font-bold text-[12px] rounded-xl flex items-center justify-center space-x-1 bg-white shadow-sm active:bg-[#8A151B] active:text-white transition-colors">
+                        <span>浏览全部打折商品</span>
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </button>
+                </section>
+
+                <!-- 底部特别关心组件 -->
+                <section class="mt-2 pb-6">
+                    <div class="flex justify-between items-end mb-2">
+                        <h2 class="text-[15px] font-black text-gray-900 tracking-wide">特别关心</h2>
+                        <button class="text-gray-500 text-[11px] font-medium flex items-center space-x-0.5">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                            <span>设置</span>
+                        </button>
+                    </div>
+                    <div class="bg-white rounded-xl p-2 shadow-sm flex items-center space-x-3 border border-gray-100">
+                        <div class="w-16 h-16 bg-gray-100 rounded-lg flex-shrink-0 relative flex items-center justify-center text-[10px] text-gray-400">
+                            <div class="absolute top-1 left-1 bg-black/60 text-white text-[8px] px-1 rounded">冷鲜</div>图片
+                        </div>
+                        <div class="flex-1">
+                            <span class="text-[#8A151B] font-bold text-[9px]">HEMKÖP</span>
+                            <h3 class="text-[13px] font-bold text-gray-900 leading-none mt-0.5">Garant 牛绞肉 12%</h3>
+                            <p class="text-[10px] text-gray-400 mt-1">约 500g / 盒</p>
+                            <div class="mt-1.5"><span class="bg-[#8A151B]/10 text-[#8A151B] text-[9px] px-1 py-0.5 rounded font-bold border border-[#8A151B]/20">平30天史低</span></div>
+                        </div>
+                        <div class="text-right pr-1">
+                            <div class="text-[#8A151B] font-black text-lg block leading-none">89<span class="text-[10px] font-normal">kr</span></div>
+                            <div class="text-gray-400 text-[10px] line-through mt-0.5">105kr</div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+
+        <!-- ================= ALL ITEMS VIEW ================= -->
+        <div id="all-items-view" class="hidden flex-1 flex flex-col h-full bg-[#F4F1EA]">
+            
+            <header class="bg-[#8A151B] text-white pt-10 pb-0 px-4 sticky top-0 z-50 shadow-md flex-shrink-0">
+                <div class="flex items-center space-x-2 mb-3">
+                    <button onclick="toggleView('home-view')" class="text-white p-1 -ml-1 active:bg-white/10 rounded-full transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                    </button>
+                    <h1 class="text-[17px] font-black tracking-tight font-sans flex-1">全部折扣</h1>
+                </div>
+                
+                <!-- 丰富的分类滑动条交互 -->
+                <div class="flex overflow-x-auto no-scrollbar space-x-5 pb-2 text-[13px] font-medium" id="category-tabs">
+                    <button onclick="toggleCategory(this)" class="category-btn text-white font-bold whitespace-nowrap border-b-2 border-white pb-1 transition-all">精选</button>
+                    <button onclick="toggleCategory(this)" class="category-btn text-white/70 whitespace-nowrap border-b-2 border-transparent pb-1 transition-all">肉禽蛋</button>
+                    <button onclick="toggleCategory(this)" class="category-btn text-white/70 whitespace-nowrap border-b-2 border-transparent pb-1 transition-all">水产海鲜</button>
+                    <button onclick="toggleCategory(this)" class="category-btn text-white/70 whitespace-nowrap border-b-2 border-transparent pb-1 transition-all">时令果蔬</button>
+                    <button onclick="toggleCategory(this)" class="category-btn text-white/70 whitespace-nowrap border-b-2 border-transparent pb-1 transition-all">乳品烘焙</button>
+                    <button onclick="toggleCategory(this)" class="category-btn text-white/70 whitespace-nowrap border-b-2 border-transparent pb-1 transition-all">粮油副食</button>
+                    <button onclick="toggleCategory(this)" class="category-btn text-white/70 whitespace-nowrap border-b-2 border-transparent pb-1 transition-all">零食水饮</button>
+                    <button onclick="toggleCategory(this)" class="category-btn text-white/70 whitespace-nowrap border-b-2 border-transparent pb-1 transition-all">个护家清</button>
+                    <button onclick="toggleCategory(this)" class="category-btn text-white/70 whitespace-nowrap border-b-2 border-transparent pb-1 transition-all">宠物</button>
+                </div>
+            </header>
+
+            <main class="flex-1 overflow-y-auto px-3 pt-2">
+                
+                <!-- 独立的多选超市胶囊 -->
+                <div class="flex overflow-x-auto no-scrollbar space-x-2 py-1 mb-1">
+                    <button id="filter-all" onclick="toggleStoreFilter('all')" class="px-3 py-1 bg-[#8A151B] text-white text-[11px] font-bold rounded-full flex-shrink-0 shadow-sm transition-colors">全部超市</button>
+                    <button id="filter-ICA" onclick="toggleStoreFilter('ICA')" class="px-3 py-1 bg-white text-gray-600 border border-gray-200 text-[11px] font-medium rounded-full flex-shrink-0 shadow-sm transition-colors">ICA</button>
+                    <button id="filter-HEMKÖP" onclick="toggleStoreFilter('HEMKÖP')" class="px-3 py-1 bg-white text-gray-600 border border-gray-200 text-[11px] font-medium rounded-full flex-shrink-0 shadow-sm transition-colors">HEMKÖP</button>
+                    <button id="filter-WILLYS" onclick="toggleStoreFilter('WILLYS')" class="px-3 py-1 bg-white text-gray-600 border border-gray-200 text-[11px] font-medium rounded-full flex-shrink-0 shadow-sm transition-colors">WILLYS</button>
+                    <button id="filter-LIDL" onclick="toggleStoreFilter('LIDL')" class="px-3 py-1 bg-white text-gray-600 border border-gray-200 text-[11px] font-medium rounded-full flex-shrink-0 shadow-sm transition-colors">LIDL</button>
+                    <button id="filter-COOP" onclick="toggleStoreFilter('COOP')" class="px-3 py-1 bg-white text-gray-600 border border-gray-200 text-[11px] font-medium rounded-full flex-shrink-0 shadow-sm transition-colors">COOP</button>
+                </div>
+
+                <!-- 时间与排序栏交互 -->
+                <div class="flex justify-between items-center py-2 mb-2 text-[11px]">
+                    <div class="flex bg-gray-200 rounded-full p-0.5 text-[10px]" id="time-toggle-all">
+                        <button onclick="toggleUIState('time', 'this', 'time-toggle-all')" class="px-2 py-1 bg-white text-gray-900 rounded-full font-bold shadow-sm transition-colors">本周</button>
+                        <button onclick="toggleUIState('time', 'next', 'time-toggle-all')" class="px-2 py-1 text-gray-500 rounded-full font-medium transition-colors">下周</button>
+                    </div>
+                    <div class="flex items-center space-x-3 text-gray-500 font-medium" id="sort-controls">
+                        <button onclick="toggleSort(this)" class="sort-btn text-[#8A151B] font-bold">综合</button>
+                        <button onclick="toggleSort(this)" class="sort-btn flex items-center space-x-0.5"><span>折扣</span><span class="text-[9px]">↓</span></button>
+                        <button onclick="toggleSort(this)" class="sort-btn flex items-center space-x-0.5"><span>价格</span><span class="text-[9px]">↑</span></button>
+                    </div>
+                </div>
+
+                <div id="all-products-container" class="grid grid-cols-2 gap-2 pb-8 mt-2"></div>
+                <div id="empty-state" class="hidden text-center text-gray-400 text-[12px] py-10">此选择下暂无打折商品</div>
+            </main>
+        </div>
+
+        <!-- 底部采购清单按钮 -->
+        <div class="absolute bottom-6 left-0 right-0 px-4 z-50 pointer-events-none">
+            <button class="w-full bg-[#8A151B] text-white py-3 rounded-2xl font-bold text-[13px] shadow-xl flex items-center justify-center space-x-2 pointer-events-auto active:scale-95 transition-transform">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                <span>采购清单 (0)</span>
+            </button>
+        </div>
+
+    </div>
+
+    <script>
+        let products = [];
+        let selectedStores = new Set();
+
+        // 真实数据抓取逻辑
+        fetch('data.json?t=' + new Date().getTime())
+            .then(response => {
+                if (!response.ok) throw new Error('网络请求报错');
+                return response.json();
+            })
+            .then(data => {
+                products = data;
+                document.getElementById('home-products-container').innerHTML = products.slice(0, 4).map(createCardHTML).join('');
+                renderAllItems();
+            })
+            .catch(error => {
+                console.error('加载数据失败:', error);
+                document.getElementById('home-products-container').innerHTML = '<div class="text-[12px] text-[#8A151B] py-4 col-span-2 font-bold">数据读取失败，请检查云端流水线</div>';
+            });
+
+        // 1. 超市多选过滤逻辑
+        function toggleStoreFilter(storeName) {
+            if (storeName === 'all') {
+                selectedStores.clear();
+            } else {
+                selectedStores.has(storeName) ? selectedStores.delete(storeName) : selectedStores.add(storeName);
+            }
+            updateFilterButtonsUI();
+            renderAllItems();
+        }
+
+        function updateFilterButtonsUI() {
+            const active = "px-3 py-1 bg-[#8A151B] text-white text-[11px] font-bold rounded-full flex-shrink-0 shadow-sm transition-colors";
+            const inactive = "px-3 py-1 bg-white text-gray-600 border border-gray-200 text-[11px] font-medium rounded-full flex-shrink-0 shadow-sm transition-colors";
+            document.getElementById('filter-all').className = selectedStores.size === 0 ? active : inactive;
+            ['ICA', 'HEMKÖP', 'WILLYS', 'LIDL', 'COOP'].forEach(store => {
+                const btn = document.getElementById(`filter-${store}`);
+                if (btn) btn.className = selectedStores.has(store) ? active : inactive;
+            });
+        }
+
+        // 2. 胶囊按钮点击UI切换 (本周/下周, 离我最近/3km)
+        function toggleUIState(type, value, containerId) {
+            const container = document.getElementById(containerId);
+            const buttons = container.getElementsByTagName('button');
+            const isRedTheme = containerId === 'time-toggle-home'; // 顶栏的红底白字配色区分
+            
+            if(type === 'time' || type === 'distance') {
+                // 重置两个按钮的样式
+                buttons[0].className = isRedTheme ? "px-2 py-1 text-white/80 rounded-full font-medium transition-colors" : "px-2 py-1 text-gray-500 rounded-full font-medium transition-colors";
+                buttons[1].className = isRedTheme ? "px-2 py-1 text-white/80 rounded-full font-medium transition-colors" : "px-2 py-1 text-gray-500 rounded-full font-medium transition-colors";
+                
+                // 激活被点击的按钮
+                const activeIndex = value === 'this' || value === 'nearest' ? 0 : 1;
+                buttons[activeIndex].className = isRedTheme 
+                    ? "px-2 py-1 bg-white text-[#8A151B] rounded-full font-bold shadow-sm transition-colors"
+                    : "px-2 py-1 bg-white text-gray-900 rounded-full font-bold shadow-sm transition-colors";
+            }
+        }
+
+        // 3. 分类Tab点击UI切换
+        function toggleCategory(clickedBtn) {
+            const btns = document.querySelectorAll('.category-btn');
+            btns.forEach(btn => {
+                btn.className = "category-btn text-white/70 whitespace-nowrap border-b-2 border-transparent pb-1 transition-all";
+            });
+            clickedBtn.className = "category-btn text-white font-bold whitespace-nowrap border-b-2 border-white pb-1 transition-all";
+        }
+
+        // 4. 排序按钮点击UI切换
+        function toggleSort(clickedBtn) {
+            const btns = document.querySelectorAll('.sort-btn');
+            btns.forEach(btn => {
+                btn.classList.remove('text-[#8A151B]', 'font-bold');
+                btn.classList.add('text-gray-500');
+            });
+            clickedBtn.classList.remove('text-gray-500');
+            clickedBtn.classList.add('text-[#8A151B]', 'font-bold');
+        }
+
+        // 卡片渲染逻辑
