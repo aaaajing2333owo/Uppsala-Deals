@@ -9,6 +9,7 @@
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         body { -webkit-tap-highlight-color: transparent; }
+        .pdf-container iframe { width: 100%; height: 100%; border: none; }
     </style>
 </head>
 <body class="bg-gray-900 flex justify-center">
@@ -17,7 +18,6 @@
 
         <!-- ================= HOME VIEW ================= -->
         <div id="home-view" class="block flex-1 overflow-y-auto">
-            
             <header class="bg-[#8A151B] text-white pt-10 pb-3 px-4 sticky top-0 z-50 shadow-md">
                 <div class="flex justify-between items-center mb-3">
                     <div class="flex items-center space-x-2">
@@ -26,51 +26,43 @@
                             <svg id="refresh-icon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
                         </button>
                     </div>
-                    <div class="flex bg-black/20 rounded-full p-0.5 text-[10px]" id="time-toggle-home">
+                    <div class="flex bg-black/20 rounded-full p-0.5 text-[10px] relative" id="time-toggle-home">
+                        <span id="new-badge-home" class="hidden absolute -top-1.5 -right-1.5 bg-red-500 text-white text-[8px] font-black px-1 rounded-sm shadow-md animate-pulse z-10">NEW</span>
                         <button onclick="setWeek('this')" class="time-btn-this px-2 py-1 bg-white text-[#8A151B] rounded-full font-bold shadow-sm transition-colors">本周</button>
                         <button onclick="setWeek('next')" class="time-btn-next px-2 py-1 text-white/80 rounded-full font-medium transition-colors">下周</button>
                     </div>
                 </div>
-                <div class="relative w-full">
-                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                    </div>
-                    <input type="text" placeholder="搜索商品..." class="block w-full pl-9 pr-3 py-1.5 border border-transparent rounded-full leading-5 bg-white/10 text-white placeholder-white/70 focus:outline-none focus:bg-white focus:text-gray-900 text-[13px] transition-colors">
-                </div>
             </header>
 
             <main class="px-4 mt-4 space-y-5">
+                <!-- 周报 -->
                 <section class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
                     <h2 class="text-base font-black text-gray-900 mb-3 tracking-wide">本周周报</h2>
                     <div id="weekly-report-container" class="space-y-3 text-[13px] leading-snug text-gray-600">
-                        <div>拉取中...</div>
+                        <div>暂无摘要数据。</div>
                     </div>
                 </section>
 
+                <!-- 超市画报入口 -->
                 <section>
                     <div class="grid grid-cols-5 gap-2">
-                        <div id="home-store-ICA" class="h-10 bg-white rounded-lg flex items-center justify-center shadow-sm font-black text-gray-800 text-[11px] border border-gray-100">ICA</div>
-                        <div id="home-store-HEMKÖP" class="h-10 bg-white rounded-lg flex items-center justify-center shadow-sm font-black text-gray-800 text-[11px] border border-gray-100">HEMKÖP</div>
-                        <div id="home-store-WILLYS" class="h-10 bg-white rounded-lg flex items-center justify-center shadow-sm font-black text-gray-800 text-[11px] border border-gray-100">WILLYS</div>
-                        <div id="home-store-LIDL" class="h-10 bg-white rounded-lg flex items-center justify-center shadow-sm font-black text-gray-800 text-[11px] border border-gray-100">LIDL</div>
-                        <div id="home-store-COOP" class="h-10 bg-white rounded-lg flex items-center justify-center shadow-sm font-black text-gray-800 text-[11px] border border-gray-100">COOP</div>
+                        <button onclick="openPDFView('ICA')" id="home-store-ICA" class="h-10 bg-white rounded-lg flex items-center justify-center shadow-sm font-black text-gray-800 text-[11px] border border-gray-100 active:scale-95 transition-transform">ICA</button>
+                        <button onclick="openPDFView('HEMKÖP')" id="home-store-HEMKÖP" class="h-10 bg-white rounded-lg flex items-center justify-center shadow-sm font-black text-gray-800 text-[11px] border border-gray-100 active:scale-95 transition-transform">HEMKÖP</button>
+                        <button onclick="openPDFView('WILLYS')" id="home-store-WILLYS" class="h-10 bg-white rounded-lg flex items-center justify-center shadow-sm font-black text-gray-800 text-[11px] border border-gray-100 active:scale-95 transition-transform">WILLYS</button>
+                        <button onclick="openPDFView('LIDL')" id="home-store-LIDL" class="h-10 bg-white rounded-lg flex items-center justify-center shadow-sm font-black text-gray-800 text-[11px] border border-gray-100 active:scale-95 transition-transform">LIDL</button>
+                        <button onclick="openPDFView('COOP')" id="home-store-COOP" class="h-10 bg-white rounded-lg flex items-center justify-center shadow-sm font-black text-gray-800 text-[11px] border border-gray-100 active:scale-95 transition-transform">COOP</button>
                     </div>
                 </section>
 
+                <!-- 精选折扣 -->
                 <section>
                     <div class="flex justify-between items-end mb-3">
                         <h2 class="text-[15px] font-black text-gray-900 tracking-wide">精选超值折扣</h2>
-                        <div class="flex bg-gray-200 rounded-full p-0.5 text-[9px]" id="distance-toggle">
-                            <button onclick="toggleUIState('distance', 'nearest', 'distance-toggle')" class="px-2 py-1 bg-white text-gray-900 rounded-full font-bold shadow-sm transition-colors">离我最近</button>
-                            <button onclick="toggleUIState('distance', '3km', 'distance-toggle')" class="px-2 py-1 text-gray-500 rounded-full font-medium transition-colors">3km内</button>
-                        </div>
                     </div>
-                    
                     <div id="home-products-container" class="grid grid-cols-2 gap-2"></div>
-                    <!-- 明确的暂无数据提示 -->
                     <div id="home-empty-state" class="hidden text-center text-gray-400 text-[13px] py-10 bg-white rounded-xl border border-gray-100 font-medium">暂无数据</div>
-
-                    <button onclick="toggleView('all-items-view')" class="w-full mt-3 py-2.5 border border-[#8A151B] text-[#8A151B] font-bold text-[12px] rounded-xl flex items-center justify-center space-x-1 bg-white shadow-sm active:bg-[#8A151B] active:text-white transition-colors">
+                    
+                    <button onclick="switchView('all-items-view')" class="w-full mt-3 py-2.5 border border-[#8A151B] text-[#8A151B] font-bold text-[12px] rounded-xl flex items-center justify-center space-x-1 bg-white shadow-sm active:bg-[#8A151B] active:text-white transition-colors">
                         <span>浏览全部打折商品</span>
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                     </button>
@@ -79,32 +71,28 @@
         </div>
 
 
-        <!-- ================= ALL ITEMS VIEW ================= -->
+        <!-- ================= ALL ITEMS VIEW (全部折扣) ================= -->
         <div id="all-items-view" class="hidden flex-1 flex flex-col h-full bg-[#F4F1EA]">
-            
             <header class="bg-[#8A151B] text-white pt-10 pb-0 px-4 sticky top-0 z-50 shadow-md flex-shrink-0">
                 <div class="flex items-center space-x-2 mb-3">
-                    <button onclick="toggleView('home-view')" class="text-white p-1 -ml-1 active:bg-white/10 rounded-full transition-colors">
+                    <button onclick="switchView('home-view')" class="text-white p-1 -ml-1 active:bg-white/10 rounded-full transition-colors">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
                     </button>
                     <h1 class="text-[17px] font-black tracking-tight font-sans flex-1">全部折扣</h1>
                 </div>
-                
+                <!-- 真实分类引擎 -->
                 <div class="flex overflow-x-auto no-scrollbar space-x-5 pb-2 text-[13px] font-medium" id="category-tabs">
-                    <button onclick="toggleCategory(this)" class="category-btn text-white font-bold whitespace-nowrap border-b-2 border-white pb-1 transition-all">精选</button>
-                    <button onclick="toggleCategory(this)" class="category-btn text-white/70 whitespace-nowrap border-b-2 border-transparent pb-1 transition-all">肉禽蛋</button>
-                    <button onclick="toggleCategory(this)" class="category-btn text-white/70 whitespace-nowrap border-b-2 border-transparent pb-1 transition-all">水产海鲜</button>
-                    <button onclick="toggleCategory(this)" class="category-btn text-white/70 whitespace-nowrap border-b-2 border-transparent pb-1 transition-all">时令果蔬</button>
-                    <button onclick="toggleCategory(this)" class="category-btn text-white/70 whitespace-nowrap border-b-2 border-transparent pb-1 transition-all">乳品烘焙</button>
-                    <button onclick="toggleCategory(this)" class="category-btn text-white/70 whitespace-nowrap border-b-2 border-transparent pb-1 transition-all">粮油副食</button>
-                    <button onclick="toggleCategory(this)" class="category-btn text-white/70 whitespace-nowrap border-b-2 border-transparent pb-1 transition-all">零食水饮</button>
-                    <button onclick="toggleCategory(this)" class="category-btn text-white/70 whitespace-nowrap border-b-2 border-transparent pb-1 transition-all">个护家清</button>
-                    <button onclick="toggleCategory(this)" class="category-btn text-white/70 whitespace-nowrap border-b-2 border-transparent pb-1 transition-all">宠物</button>
+                    <button onclick="setCategory('精选', this)" class="category-btn text-white font-bold whitespace-nowrap border-b-2 border-white pb-1 transition-all">精选</button>
+                    <button onclick="setCategory('特别关心', this)" class="category-btn text-red-300 font-bold whitespace-nowrap border-b-2 border-transparent pb-1 transition-all">特别关心 ❤️</button>
+                    <button onclick="setCategory('肉禽蛋', this)" class="category-btn text-white/70 whitespace-nowrap border-b-2 border-transparent pb-1 transition-all">肉禽蛋</button>
+                    <button onclick="setCategory('水产海鲜', this)" class="category-btn text-white/70 whitespace-nowrap border-b-2 border-transparent pb-1 transition-all">水产海鲜</button>
+                    <button onclick="setCategory('时令果蔬', this)" class="category-btn text-white/70 whitespace-nowrap border-b-2 border-transparent pb-1 transition-all">时令果蔬</button>
+                    <button onclick="setCategory('乳品烘焙', this)" class="category-btn text-white/70 whitespace-nowrap border-b-2 border-transparent pb-1 transition-all">乳品烘焙</button>
+                    <button onclick="setCategory('粮油副食', this)" class="category-btn text-white/70 whitespace-nowrap border-b-2 border-transparent pb-1 transition-all">粮油副食</button>
                 </div>
             </header>
 
             <main class="flex-1 overflow-y-auto px-3 pt-2">
-                
                 <div class="flex overflow-x-auto no-scrollbar space-x-2 py-1 mb-1">
                     <button id="filter-all" onclick="toggleStoreFilter('all')" class="px-3 py-1 bg-[#8A151B] text-white text-[11px] font-bold rounded-full flex-shrink-0 shadow-sm transition-colors">全部</button>
                     <button id="filter-ICA" onclick="toggleStoreFilter('ICA')" class="px-3 py-1 bg-white text-gray-600 border border-gray-200 text-[11px] font-medium rounded-full flex-shrink-0 shadow-sm transition-colors">ICA</button>
@@ -115,57 +103,129 @@
                 </div>
 
                 <div class="flex justify-between items-center py-2 mb-2 text-[11px]">
-                    <div class="flex bg-gray-200 rounded-full p-0.5 text-[10px]" id="time-toggle-all">
+                    <div class="flex bg-gray-200 rounded-full p-0.5 text-[10px] relative" id="time-toggle-all">
                         <button onclick="setWeek('this')" class="time-btn-this px-2 py-1 bg-white text-gray-900 rounded-full font-bold shadow-sm transition-colors">本周</button>
                         <button onclick="setWeek('next')" class="time-btn-next px-2 py-1 text-gray-500 rounded-full font-medium transition-colors">下周</button>
                     </div>
+                    <!-- 真实双向排序引擎 -->
                     <div class="flex items-center space-x-3 text-gray-500 font-medium" id="sort-controls">
-                        <button onclick="toggleSort(this)" class="sort-btn text-[#8A151B] font-bold">综合</button>
-                        <button onclick="toggleSort(this)" class="sort-btn flex items-center space-x-0.5"><span>折扣</span><span class="text-[9px]">↓</span></button>
-                        <button onclick="toggleSort(this)" class="sort-btn flex items-center space-x-0.5"><span>价格</span><span class="text-[9px]">↑</span></button>
+                        <button onclick="setSort('default')" id="sort-btn-default" class="text-[#8A151B] font-bold">综合</button>
+                        <button onclick="setSort('discount')" id="sort-btn-discount" class="flex items-center space-x-0.5"><span>折扣</span><span id="sort-icon-discount" class="text-[9px]">↓</span></button>
+                        <button onclick="setSort('price')" id="sort-btn-price" class="flex items-center space-x-0.5"><span>价格</span><span id="sort-icon-price" class="text-[9px]">↓</span></button>
                     </div>
                 </div>
 
                 <div id="all-products-container" class="grid grid-cols-2 gap-2 pb-8 mt-2"></div>
-                <!-- 明确的暂无数据提示 -->
                 <div id="empty-state" class="hidden text-center text-gray-400 text-[13px] py-16 font-medium">暂无数据</div>
             </main>
+        </div>
+
+
+        <!-- ================= PDF VIEWER VIEW ================= -->
+        <div id="pdf-view" class="hidden flex-1 flex flex-col h-full bg-[#F4F1EA] z-50">
+            <header class="bg-[#8A151B] text-white pt-10 pb-3 px-4 shadow-md flex-shrink-0 flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <button onclick="switchView('home-view')" class="text-white p-1 -ml-1 active:bg-white/10 rounded-full">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                    </button>
+                    <h1 id="pdf-title" class="text-[17px] font-black tracking-tight font-sans">超市画报</h1>
+                </div>
+            </header>
+            <main class="flex-1 relative bg-gray-100 flex items-center justify-center pdf-container" id="pdf-container">
+                <div class="text-center text-gray-400 text-[13px] font-medium p-6">
+                    暂未获取到本周画报数据<br><span class="text-[10px] mt-2 block">需等待爬虫链路提供 PDF 链接</span>
+                </div>
+            </main>
+        </div>
+
+        <!-- ================= SHOPPING LIST VIEW (采购清单) ================= -->
+        <div id="cart-view" class="hidden flex-1 flex flex-col h-full bg-[#F4F1EA] z-50 absolute inset-0">
+            <header class="bg-white text-gray-900 pt-10 pb-3 px-4 shadow-sm flex-shrink-0 flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <button onclick="closeCart()" class="text-gray-900 p-1 -ml-1 bg-gray-100 rounded-full">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <h1 class="text-[17px] font-black tracking-tight">采购清单</h1>
+                </div>
+                <button onclick="clearCart()" class="text-red-500 text-[11px] font-bold px-2 py-1 bg-red-50 rounded">清空</button>
+            </header>
+            <main class="flex-1 overflow-y-auto p-4 space-y-2" id="cart-items-container"></main>
+            <div class="bg-white p-4 pb-8 shadow-[0_-4px_10px_rgba(0,0,0,0.05)] border-t border-gray-100">
+                <div class="flex justify-between items-center text-[15px] font-black text-gray-900">
+                    <span>预估总价</span>
+                    <span id="cart-total-price">0 kr</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部浮动入口 (加入清单统计) -->
+        <div id="bottom-cart-bar" class="absolute bottom-6 left-0 right-0 px-4 z-40">
+            <button onclick="openCart()" class="w-full bg-[#8A151B] text-white py-3 rounded-2xl font-bold text-[13px] shadow-xl flex items-center justify-between px-5 active:scale-95 transition-transform">
+                <div class="flex items-center space-x-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                    <span>采购清单</span>
+                </div>
+                <div class="bg-white text-[#8A151B] px-2 py-0.5 rounded-full text-[11px]" id="cart-count">0 件</div>
+            </button>
         </div>
 
     </div>
 
     <script>
+        // 核心全局状态
         let products = [];
+        let pdfLinks = {}; // 存放爬虫抓取的PDF链接 { "ICA": "url...", "HEMKÖP": "url..." }
+        
         let selectedStores = new Set();
-        let currentWeek = 'this';
+        let currentWeek = 'this'; 
+        let currentCategory = '精选';
+        let currentSort = 'default'; // default, discount, price
+        let sortOrder = 'desc'; // desc (降序), asc (升序)
+
+        // 持久化存储 (本地浏览器)
+        let shoppingCart = JSON.parse(localStorage.getItem('uppsala_cart')) || [];
+        let favoriteItems = new Set(JSON.parse(localStorage.getItem('uppsala_favorites')) || []);
+        let lastFetchTime = localStorage.getItem('uppsala_last_fetch') || 0;
+
+        function updateNEWBadge(isNew) {
+            const b1 = document.getElementById('new-badge-home');
+            if (isNew) { b1.classList.remove('hidden'); } else { b1.classList.add('hidden'); }
+        }
 
         function fetchData() {
             const icon = document.getElementById('refresh-icon');
             icon.classList.add('animate-spin');
             
-            document.getElementById('home-products-container').innerHTML = '<div class="text-[12px] text-gray-500 py-4 col-span-2">同步数据中...</div>';
-            document.getElementById('all-products-container').innerHTML = '';
-
             fetch('data.json?t=' + new Date().getTime())
                 .then(response => {
                     if (!response.ok) throw new Error('网络请求报错');
                     return response.json();
                 })
                 .then(data => {
+                    let fetchTimestamp = new Date().getTime();
+                    // 模拟检测是否有新数据更新 (真实情况应校验 data 里的 version/time)
+                    if (fetchTimestamp - lastFetchTime > 86400000) {
+                        updateNEWBadge(true);
+                        localStorage.setItem('uppsala_last_fetch', fetchTimestamp);
+                    } else {
+                        updateNEWBadge(false);
+                    }
+
                     if (Array.isArray(data)) {
                         products = data;
                         renderWeeklyReport(null);
                     } else {
                         products = data.products || [];
+                        pdfLinks = data.pdfs || {};
                         renderWeeklyReport(data.report || []);
                     }
                     
                     renderData();
+                    updateCartUI();
                     setTimeout(() => icon.classList.remove('animate-spin'), 500);
                 })
                 .catch(error => {
                     console.error('加载失败:', error);
-                    document.getElementById('home-products-container').innerHTML = '<div class="text-[12px] text-[#8A151B] py-4 col-span-2">拉取失败，请检查数据流</div>';
                     icon.classList.remove('animate-spin');
                 });
         }
@@ -175,9 +235,7 @@
         function renderWeeklyReport(reportData) {
             const container = document.getElementById('weekly-report-container');
             if (!reportData || reportData.length === 0) {
-                container.innerHTML = `
-                    <div><span class="font-black text-[#B8860B] block mb-0.5">自动摘要生成中</span>爬虫系统正在分析本周超市折扣变动，请稍后刷新查看最新洞察。</div>
-                `;
+                container.innerHTML = `<div>暂无本周市场摘要。</div>`;
                 return;
             }
             container.innerHTML = reportData.map((item, index) => `
@@ -186,39 +244,164 @@
             `).join('');
         }
 
+        // ================= 视图与控制逻辑 =================
+        
+        function switchView(viewId) {
+            ['home-view', 'all-items-view', 'pdf-view'].forEach(id => {
+                document.getElementById(id).classList.replace('flex-1', 'hidden');
+                document.getElementById(id).classList.add('hidden');
+            });
+            const target = document.getElementById(viewId);
+            target.classList.remove('hidden');
+            target.classList.add('flex-1');
+            
+            // 底栏控制
+            const cartBar = document.getElementById('bottom-cart-bar');
+            if(viewId === 'pdf-view') cartBar.classList.add('hidden');
+            else cartBar.classList.remove('hidden');
+        }
+
+        function openPDFView(storeName) {
+            document.getElementById('pdf-title').innerText = storeName + ' 画报';
+            const container = document.getElementById('pdf-container');
+            
+            // 真实接入逻辑：检查 pdfLinks 是否存在该超市链接
+            if (pdfLinks[storeName]) {
+                container.innerHTML = `<iframe src="${pdfLinks[storeName]}#toolbar=0" title="${storeName} PDF"></iframe>`;
+            } else {
+                container.innerHTML = `<div class="text-center text-gray-400 text-[13px] font-medium p-6">暂未获取到 ${storeName} 本周画报数据<br><span class="text-[10px] mt-2 block">需等待爬虫系统抓取 PDF 链接注入</span></div>`;
+            }
+            switchView('pdf-view');
+        }
+
         function setWeek(weekValue) {
             currentWeek = weekValue;
-            
+            updateNEWBadge(false); // 点击后取消NEW标记
             document.querySelectorAll('.time-btn-this').forEach(btn => {
-                const isRedBg = btn.parentElement.id === 'time-toggle-home';
-                btn.className = currentWeek === 'this' 
-                    ? (isRedBg ? "time-btn-this px-2 py-1 bg-white text-[#8A151B] rounded-full font-bold shadow-sm transition-colors" : "time-btn-this px-2 py-1 bg-white text-gray-900 rounded-full font-bold shadow-sm transition-colors")
-                    : (isRedBg ? "time-btn-this px-2 py-1 text-white/80 rounded-full font-medium transition-colors" : "time-btn-this px-2 py-1 text-gray-500 rounded-full font-medium transition-colors");
+                const isRed = btn.parentElement.id === 'time-toggle-home';
+                btn.className = currentWeek === 'this' ? `time-btn-this px-2 py-1 bg-white ${isRed?'text-[#8A151B]':'text-gray-900'} rounded-full font-bold shadow-sm` : "time-btn-this px-2 py-1 text-gray-500 rounded-full font-medium";
             });
-
             document.querySelectorAll('.time-btn-next').forEach(btn => {
-                const isRedBg = btn.parentElement.id === 'time-toggle-home';
-                btn.className = currentWeek === 'next'
-                    ? (isRedBg ? "time-btn-next px-2 py-1 bg-white text-[#8A151B] rounded-full font-bold shadow-sm transition-colors" : "time-btn-next px-2 py-1 bg-white text-gray-900 rounded-full font-bold shadow-sm transition-colors")
-                    : (isRedBg ? "time-btn-next px-2 py-1 text-white/80 rounded-full font-medium transition-colors" : "time-btn-next px-2 py-1 text-gray-500 rounded-full font-medium transition-colors");
+                const isRed = btn.parentElement.id === 'time-toggle-home';
+                btn.className = currentWeek === 'next' ? `time-btn-next px-2 py-1 bg-white ${isRed?'text-[#8A151B]':'text-gray-900'} rounded-full font-bold shadow-sm` : "time-btn-next px-2 py-1 text-gray-500 rounded-full font-medium";
             });
-
             renderData();
         }
 
         function toggleStoreFilter(storeName) {
-            if (storeName === 'all') {
-                selectedStores.clear();
+            if (storeName === 'all') selectedStores.clear();
+            else selectedStores.has(storeName) ? selectedStores.delete(storeName) : selectedStores.add(storeName);
+            renderData();
+        }
+
+        function setCategory(cat, clickedBtn) {
+            currentCategory = cat;
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                if(btn.innerText.includes('特别关心')) {
+                    btn.className = "category-btn text-red-300/60 whitespace-nowrap border-b-2 border-transparent pb-1 transition-all";
+                } else {
+                    btn.className = "category-btn text-white/70 whitespace-nowrap border-b-2 border-transparent pb-1 transition-all";
+                }
+            });
+            if(cat === '特别关心') {
+                clickedBtn.className = "category-btn text-red-400 font-bold whitespace-nowrap border-b-2 border-red-400 pb-1 transition-all";
             } else {
-                selectedStores.has(storeName) ? selectedStores.delete(storeName) : selectedStores.add(storeName);
+                clickedBtn.className = "category-btn text-white font-bold whitespace-nowrap border-b-2 border-white pb-1 transition-all";
             }
             renderData();
         }
 
-        // 超市按钮置灰状态控制
+        function setSort(type) {
+            if (currentSort === type && type !== 'default') {
+                sortOrder = sortOrder === 'desc' ? 'asc' : 'desc'; // 切换升降序
+            } else {
+                currentSort = type;
+                sortOrder = type === 'price' ? 'asc' : 'desc'; // 价格默认低到高，折扣默认高到低
+            }
+
+            // 更新UI
+            ['default', 'discount', 'price'].forEach(t => {
+                const btn = document.getElementById(`sort-btn-${t}`);
+                if(t === 'default') btn.className = currentSort === t ? "text-[#8A151B] font-bold" : "text-gray-500";
+                else {
+                    btn.className = currentSort === t ? "flex items-center space-x-0.5 text-[#8A151B] font-bold" : "flex items-center space-x-0.5 text-gray-500";
+                    if(currentSort === t) document.getElementById(`sort-icon-${t}`).innerText = sortOrder === 'desc' ? '↓' : '↑';
+                }
+            });
+            renderData();
+        }
+
+        // ================= 购物车与特别关心业务逻辑 =================
+        
+        function toggleFavorite(id, e) {
+            e.stopPropagation();
+            if (favoriteItems.has(id)) favoriteItems.delete(id);
+            else favoriteItems.add(id);
+            localStorage.setItem('uppsala_favorites', JSON.stringify([...favoriteItems]));
+            renderData(); // 重新渲染刷新红心
+        }
+
+        function addToCart(id, name, price, store, e) {
+            e.stopPropagation();
+            shoppingCart.push({ id, name, price: parseFloat(price), store });
+            localStorage.setItem('uppsala_cart', JSON.stringify(shoppingCart));
+            updateCartUI();
+        }
+
+        function removeFromCart(index) {
+            shoppingCart.splice(index, 1);
+            localStorage.setItem('uppsala_cart', JSON.stringify(shoppingCart));
+            updateCartUI();
+            openCart(); // 刷新弹窗
+        }
+
+        function clearCart() {
+            shoppingCart = [];
+            localStorage.removeItem('uppsala_cart');
+            updateCartUI();
+            openCart();
+        }
+
+        function updateCartUI() {
+            document.getElementById('cart-count').innerText = `${shoppingCart.length} 件`;
+        }
+
+        function openCart() {
+            document.getElementById('cart-view').classList.remove('hidden');
+            const container = document.getElementById('cart-items-container');
+            if(shoppingCart.length === 0) {
+                container.innerHTML = '<div class="text-center text-gray-400 text-[12px] py-10">清单为空</div>';
+                document.getElementById('cart-total-price').innerText = '0 kr';
+                return;
+            }
+            
+            let total = 0;
+            container.innerHTML = shoppingCart.map((item, index) => {
+                total += item.price;
+                return `
+                    <div class="bg-white p-3 rounded-xl flex justify-between items-center shadow-sm border border-gray-100">
+                        <div>
+                            <span class="text-[9px] bg-gray-100 text-gray-500 px-1 rounded mr-1">${item.store}</span>
+                            <span class="text-[13px] font-bold text-gray-900">${item.name}</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <span class="text-[#8A151B] font-black text-[13px]">${item.price} kr</span>
+                            <button onclick="removeFromCart(${index})" class="text-gray-300 hover:text-red-500">×</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            document.getElementById('cart-total-price').innerText = total.toFixed(2) + ' kr';
+        }
+
+        function closeCart() {
+            document.getElementById('cart-view').classList.add('hidden');
+        }
+
+        // ================= 统一渲染引擎 =================
+
         function updateStoreUI(availableStores) {
             const storeList = ['ICA', 'HEMKÖP', 'WILLYS', 'LIDL', 'COOP'];
-            
             const active = "px-3 py-1 bg-[#8A151B] text-white text-[11px] font-bold rounded-full flex-shrink-0 shadow-sm transition-colors";
             const inactive = "px-3 py-1 bg-white text-gray-600 border border-gray-200 text-[11px] font-medium rounded-full flex-shrink-0 shadow-sm transition-colors";
             const disabled = "px-3 py-1 bg-gray-100 text-gray-300 border border-transparent text-[11px] font-medium rounded-full flex-shrink-0 pointer-events-none";
@@ -230,121 +413,103 @@
                 const homeCard = document.getElementById(`home-store-${store}`);
                 
                 if (!availableStores.has(store)) {
-                    // 无数据：置灰，不可点击
                     if (filterBtn) filterBtn.className = disabled;
-                    if (homeCard) homeCard.className = "h-10 bg-gray-100 rounded-lg flex items-center justify-center font-black text-gray-300 text-[11px] border border-gray-100";
+                    if (homeCard) homeCard.className = "h-10 bg-gray-100 rounded-lg flex items-center justify-center font-black text-gray-300 text-[11px] border border-gray-100 pointer-events-none";
                 } else {
-                    // 有数据：正常逻辑
                     if (filterBtn) filterBtn.className = selectedStores.has(store) ? active : inactive;
-                    if (homeCard) homeCard.className = "h-10 bg-white rounded-lg flex items-center justify-center shadow-sm font-black text-gray-800 text-[11px] border border-gray-100";
+                    if (homeCard) homeCard.className = "h-10 bg-white rounded-lg flex items-center justify-center shadow-sm font-black text-gray-800 text-[11px] border border-gray-100 active:scale-95 transition-transform cursor-pointer";
                 }
             });
         }
 
-        function toggleCategory(clickedBtn) {
-            const btns = document.querySelectorAll('.category-btn');
-            btns.forEach(btn => {
-                btn.className = "category-btn text-white/70 whitespace-nowrap border-b-2 border-transparent pb-1 transition-all";
-            });
-            clickedBtn.className = "category-btn text-white font-bold whitespace-nowrap border-b-2 border-white pb-1 transition-all";
-        }
-
-        function toggleSort(clickedBtn) {
-            const btns = document.querySelectorAll('.sort-btn');
-            btns.forEach(btn => {
-                btn.classList.remove('text-[#8A151B]', 'font-bold');
-                btn.classList.add('text-gray-500');
-            });
-            clickedBtn.classList.remove('text-gray-500');
-            clickedBtn.classList.add('text-[#8A151B]', 'font-bold');
-        }
-
-        function toggleUIState(type, value, containerId) {
-            const container = document.getElementById(containerId);
-            const buttons = container.getElementsByTagName('button');
-            if(type === 'distance') {
-                buttons[0].className = "px-2 py-1 text-gray-500 rounded-full font-medium transition-colors";
-                buttons[1].className = "px-2 py-1 text-gray-500 rounded-full font-medium transition-colors";
-                const activeIndex = value === 'nearest' ? 0 : 1;
-                buttons[activeIndex].className = "px-2 py-1 bg-white text-gray-900 rounded-full font-bold shadow-sm transition-colors";
-            }
-        }
-
         function renderData() {
-            // 按当前选择的时间过滤数据
-            let timeFiltered = products.filter(p => (p.week || 'this') === currentWeek);
+            // 1. 时间过滤
+            let baseData = products.filter(p => (p.week || 'this') === currentWeek);
             
-            // 提取当前时间段内有数据的超市集合
-            let availableStores = new Set(timeFiltered.map(p => p.store));
-            
-            // 防御性清理：如果已选的超市在当前时间段无数据，则从筛选池中移除
-            selectedStores.forEach(s => {
-                if(!availableStores.has(s)) selectedStores.delete(s);
-            });
-
-            // 更新超市按钮（置灰/激活）
+            // 更新置灰状态
+            let availableStores = new Set(baseData.map(p => p.store));
+            selectedStores.forEach(s => { if(!availableStores.has(s)) selectedStores.delete(s); });
             updateStoreUI(availableStores);
 
-            // 渲染主页
+            // 渲染主页前4个
             const homeContainer = document.getElementById('home-products-container');
             const homeEmpty = document.getElementById('home-empty-state');
-            if(timeFiltered.length === 0) {
+            if(baseData.length === 0) {
                 homeContainer.innerHTML = '';
                 homeEmpty.classList.remove('hidden');
             } else {
                 homeEmpty.classList.add('hidden');
-                homeContainer.innerHTML = timeFiltered.slice(0, 4).map(createCardHTML).join('');
+                homeContainer.innerHTML = baseData.slice(0, 4).map(createCardHTML).join('');
+            }
+
+            // 2. 超市过滤
+            let filtered = selectedStores.size > 0 ? baseData.filter(p => selectedStores.has(p.store)) : baseData;
+
+            // 3. 分类过滤 (特别关心 / 普通分类)
+            if (currentCategory === '特别关心') {
+                filtered = filtered.filter(p => favoriteItems.has(p.name));
+            } else if (currentCategory !== '精选') {
+                filtered = filtered.filter(p => p.category === currentCategory); // 需要后端爬虫打 tag
+            }
+
+            // 4. 排序引擎
+            if (currentSort === 'price') {
+                filtered.sort((a, b) => sortOrder === 'asc' ? parseFloat(a.currentPrice) - parseFloat(b.currentPrice) : parseFloat(b.currentPrice) - parseFloat(a.currentPrice));
+            } else if (currentSort === 'discount') {
+                // 简单的按折扣数值排序 (假设 discount 格式为 "-30%" 或 "特价")
+                filtered.sort((a, b) => {
+                    let numA = parseInt(a.discount) || 0;
+                    let numB = parseInt(b.discount) || 0;
+                    return sortOrder === 'desc' ? numA - numB : numB - numA; // 负数越小折扣越大
+                });
             }
 
             // 渲染全量页
-            let finalFiltered = selectedStores.size > 0 
-                ? timeFiltered.filter(p => selectedStores.has(p.store)) 
-                : timeFiltered;
-
             const allContainer = document.getElementById('all-products-container');
             const allEmpty = document.getElementById('empty-state');
-            if (finalFiltered.length === 0) {
+            if (filtered.length === 0) {
                 allContainer.innerHTML = '';
                 allEmpty.classList.remove('hidden');
             } else {
                 allEmpty.classList.add('hidden');
-                allContainer.innerHTML = finalFiltered.map(createCardHTML).join('');
+                allContainer.innerHTML = filtered.map(createCardHTML).join('');
             }
         }
 
         function createCardHTML(p) {
+            const isFav = favoriteItems.has(p.name);
+            const heartIcon = isFav ? '<span class="text-red-500 mr-1 text-[12px]">❤️</span>' : '';
+            
+            // 冷鲜/冷冻 标签逻辑 (依赖爬虫提供 p.temp 字段)
+            const tempTag = (p.temp === '冷鲜' || p.temp === '冷冻') 
+                ? `<div class="absolute top-1 left-1 bg-black/70 text-white text-[8px] px-1 py-0.5 rounded shadow-sm z-10">${p.temp}</div>` 
+                : '';
+
             return `
-                <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 relative pb-2 flex flex-col">
-                    <div class="absolute top-1.5 right-1.5 bg-[#8A151B] text-white font-bold text-[9px] px-1 py-0.5 rounded z-10">${p.discount || '特价'}</div>
-                    <div class="h-24 bg-gray-100 w-full relative shrink-0">
-                        <div class="w-full h-full object-cover bg-gray-200 flex items-center justify-center text-gray-400 text-xs">商品图</div>
-                        <div class="absolute bottom-1.5 left-1.5 bg-white/90 backdrop-blur text-[#8A151B] font-black text-[8px] px-1 py-0.5 rounded shadow-sm">${p.store}</div>
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 relative pb-2 flex flex-col active:scale-[0.98] transition-transform" onclick="toggleFavorite('${p.name}', event)">
+                    ${tempTag}
+                    <div class="absolute top-1.5 right-1.5 bg-[#8A151B] text-white font-bold text-[9px] px-1 py-0.5 rounded z-10 shadow-sm">${p.discount || '特价'}</div>
+                    <div class="h-24 bg-gray-50 w-full relative shrink-0">
+                        <div class="w-full h-full flex items-center justify-center text-gray-300 text-xs">商品图</div>
+                        <div class="absolute bottom-1.5 left-1.5 bg-white/95 backdrop-blur text-[#8A151B] font-black text-[8px] px-1 py-0.5 rounded shadow-sm">${p.store}</div>
                     </div>
                     <div class="p-2 flex flex-col justify-between flex-1">
                         <div>
-                            <h3 class="text-[12px] font-bold text-gray-900 leading-tight">${p.name}</h3>
-                            <p class="text-[9px] text-gray-500 mt-1">${p.specs}</p>
+                            <h3 class="text-[12px] font-bold text-gray-900 leading-tight flex items-center">${heartIcon}${p.name}</h3>
+                            <p class="text-[9px] text-gray-400 mt-1">${p.specs || '见详情'}</p>
                         </div>
                         <div class="mt-2 flex items-end justify-between">
                             <div class="flex items-baseline space-x-1">
                                 <span class="text-[#8A151B] font-black text-[15px] leading-none">${p.currentPrice}<span class="text-[9px] font-normal">kr</span></span>
                             </div>
+                            <!-- 采购加号按钮 -->
+                            <button onclick="addToCart('${p.id || p.name}', '${p.name}', '${p.currentPrice}', '${p.store}', event)" class="w-5 h-5 rounded-full bg-[#8A151B] text-white flex items-center justify-center shadow-md active:bg-gray-800 transition-colors">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4"></path></svg>
+                            </button>
                         </div>
                     </div>
                 </div>
             `;
-        }
-
-        function toggleView(viewId) {
-            const home = document.getElementById('home-view');
-            const all = document.getElementById('all-items-view');
-            if (viewId === 'all-items-view') {
-                home.classList.replace('flex-1', 'hidden');
-                all.classList.replace('hidden', 'flex-1');
-            } else {
-                all.classList.replace('flex-1', 'hidden');
-                home.classList.replace('hidden', 'flex-1');
-            }
         }
     </script>
 </body>
