@@ -1,3 +1,23 @@
 [
-  { "store": "ICA", "discount": "特价", "name": "系统初始化中", "specs": "等待爬虫运行", "currentPrice": "0" }
+  {
+    "store": "ICA",
+    "discount": "-30%",
+    "name": "冷鲜鸡胸肉",
+    "specs": "约 1kg / 盒",
+    "currentPrice": "79"
+  },
+  {
+    "store": "WILLYS",
+    "discount": "-25%",
+    "name": "网袋土豆",
+    "specs": "3kg / 袋",
+    "currentPrice": "29"
+  },
+  {
+    "store": "HEMKÖP",
+    "discount": "超值",
+    "name": "红提",
+    "specs": "500g / 盒",
+    "currentPrice": "25"
+  }
 ]
