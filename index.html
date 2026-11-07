@@ -14,7 +14,6 @@
         .modal-fade { transition: opacity 0.2s; opacity: 0; pointer-events: none; }
         .modal-fade.open { opacity: 1; pointer-events: auto; }
         input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
-        /* 针对页面锁定 */
         .no-scroll { overflow: hidden !important; }
     </style>
 </head>
@@ -67,7 +66,6 @@
                     <div class="flex justify-between items-end mb-2">
                         <div class="flex items-center space-x-1.5">
                             <h2 class="text-[15px] font-black text-gray-900 tracking-wide">精选</h2>
-                            <span class="bg-[#FF4500] text-white text-[9px] px-1.5 py-0.5 rounded font-bold shadow-sm">超值</span>
                         </div>
                         <button onclick="openSettings()" class="text-gray-400 hover:text-gray-600 p-1">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
@@ -82,9 +80,9 @@
                     </button>
                 </section>
 
-                <!-- 特别关心 -->
-                <section id="home-fav-section" class="hidden pb-4">
-                    <div class="flex justify-between items-end mb-2 mt-4">
+                <!-- 特别关心 (永久显示，空时展示占位) -->
+                <section id="home-fav-section" class="pb-4 mt-4">
+                    <div class="flex justify-between items-end mb-2">
                         <h2 class="text-[15px] font-black text-gray-900 tracking-wide flex items-center">特别关心</h2>
                     </div>
                     <div id="home-fav-container" class="grid grid-cols-2 gap-2"></div>
@@ -160,7 +158,7 @@
             <main class="flex-1 relative w-full h-full" id="pdf-container"></main>
         </div>
 
-        <!-- ================= BOTTOM CART BAR (Fixed at bottom) ================= -->
+        <!-- ================= BOTTOM CART BAR ================= -->
         <div id="bottom-cart-bar" class="fixed bottom-4 left-0 right-0 max-w-md mx-auto px-4 z-20">
             <button onclick="toggleCartModal(true)" class="w-full bg-[#8A151B] text-white py-3.5 rounded-2xl font-bold text-[14px] shadow-[0_8px_20px_rgba(138,21,27,0.3)] flex items-center justify-between px-5 active:scale-95 transition-transform">
                 <div class="flex items-center space-x-2">
@@ -212,7 +210,7 @@
 
         <!-- ================= PRODUCT DETAIL MODAL ================= -->
         <div id="detail-overlay" class="modal-fade fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4" onclick="closeDetail()">
-            <div id="detail-card" class="bg-white w-[90%] max-w-sm rounded-2xl overflow-hidden shadow-2xl scale-95 transition-transform" onclick="event.stopPropagation()">
+            <div id="detail-card" class="bg-white w-[90%] max-w-md rounded-2xl overflow-hidden shadow-2xl scale-95 transition-transform" onclick="event.stopPropagation()">
                 <!-- JS 动态注入 -->
             </div>
         </div>
@@ -231,8 +229,7 @@
         let sortOrder = 'desc'; 
         let searchQuery = '';
         
-        // 精选设置配置
-        let featuredThreshold = 30; // 默认7折
+        let featuredThreshold = 30;
         let featuredStores = new Set(STORES);
         
         let shoppingCart = JSON.parse(localStorage.getItem('uppsala_cart')) || [];
@@ -262,8 +259,8 @@
                 ],
                 posters: {
                     "ICA": [
-                        { title: "ICA Maxi 狂欢专刊", valid: "11/04 - 11/10", preview: "https://placehold.co/600x400/E2E8F0/94A3B8?text=ICA+Poster+1", url: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" },
-                        { title: "ICA Kvantum 周末画报", valid: "11/08 - 11/10", preview: "https://placehold.co/600x400/E2E8F0/94A3B8?text=ICA+Poster+2", url: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" }
+                        { title: "ICA Luthagen 专刊", valid: "11/04 - 11/10", preview: "https://placehold.co/600x400/E2E8F0/94A3B8?text=ICA+Luthagen", url: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" },
+                        { title: "ICA Torgkassen 画报", valid: "11/08 - 11/10", preview: "https://placehold.co/600x400/E2E8F0/94A3B8?text=ICA+Torgkassen", url: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" }
                     ],
                     "HEMKÖP": [{ title: "Hemköp 会员专刊", valid: "11/04 - 11/10", preview: "https://placehold.co/600x400/E2E8F0/94A3B8?text=Hemkop+Poster", url: "" }]
                 },
@@ -293,7 +290,6 @@
                 });
         }
 
-        // ================= UI渲染 =================
         function renderWeeklyReport(reportData) {
             const container = document.getElementById('weekly-report-container');
             if (!reportData || reportData.length === 0) {
@@ -323,7 +319,6 @@
                 STORES.map(store => `<button id="filter-${store}" onclick="toggleStoreFilter('${store}')" class="px-3 py-1 bg-white text-gray-600 border border-gray-200 text-[11px] font-medium rounded-full flex-shrink-0 shadow-sm transition-colors">${store}</button>`).join('');
         }
 
-        // ================= 精选设置 =================
         function openSettings() {
             document.body.classList.add('no-scroll');
             document.getElementById('setting-threshold').value = featuredThreshold;
@@ -361,14 +356,16 @@
             setTimeout(() => overlay.classList.remove('open'), 200);
         }
 
-        // ================= 样式计算 =================
+        // ================= 暗红色渐变引擎 (统一文字与背景色，抛弃刺眼橘红) =================
         function getDiscountStyle(discountStr) {
             let val = parseInt((discountStr||"").replace(/[^\d]/g, ''));
-            if(isNaN(val)) return 'bg-white text-[#FF4500] border border-[#FF4500]';
-            // >20% (比8折深) -> 橙红底白字
-            if(val >= 20) return 'bg-[#FF4500] text-white border border-[#FF4500]';
-            // <=20% (8折-9折) -> 白底橙红字
-            return 'bg-white text-[#FF4500] border border-[#FF4500]';
+            if(isNaN(val)) return 'bg-[#8A151B] text-white border border-[#8A151B]';
+            // 折扣梯度: 暗黑红 -> 深红 -> 主题红 -> 浅红
+            if(val >= 40) return 'bg-[#4A0B0E] text-white border border-[#4A0B0E]'; 
+            if(val >= 30) return 'bg-[#5D0E12] text-white border border-[#5D0E12]'; 
+            if(val >= 20) return 'bg-[#731217] text-white border border-[#731217]'; 
+            if(val >= 10) return 'bg-[#8A151B] text-white border border-[#8A151B]'; 
+            return 'bg-[#A3232A] text-white border border-[#A3232A]';               
         }
 
         const frozenSVG = `<svg class="inline-block w-3.5 h-3.5 text-blue-400 ml-1 relative -top-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v18m9-9H3m15.364-6.364l-12.728 12.728m12.728 0L3.636 5.636"></path></svg>`;
@@ -381,7 +378,6 @@
             
             const newTagImg = (p.is_new && isNewVisible) ? `<div class="absolute top-1 left-1 bg-[#064E3B] text-white text-[9px] font-black px-1.5 rounded-sm shadow-md z-10">NEW</div>` : '';
             const frozenTag = p.is_frozen ? frozenSVG : '';
-            const memberTag = p.is_member ? `<span class="bg-[#D4AF37] text-white text-[9px] px-1.5 py-0.5 rounded shadow-sm ml-1.5 font-bold tracking-wide">会员</span>` : '';
             
             const colorClass = getDiscountStyle(p.discount || "");
             
@@ -407,7 +403,6 @@
                         <img src="https://placehold.co/400x300/E2E8F0/94A3B8?text=Image" class="w-full h-full object-cover" alt="img"/>
                         <div class="absolute bottom-1.5 left-1.5 flex items-center">
                             <span class="bg-white/95 backdrop-blur text-[#8A151B] font-black text-[9px] px-1.5 py-0.5 rounded shadow-sm">${p.store}</span>
-                            ${memberTag}
                         </div>
                         <button onclick="toggleFavorite('${p.id}', event)" class="absolute bottom-1.5 right-1.5 p-1.5 z-20 bg-white/70 rounded-full backdrop-blur">
                             ${favSvg}
@@ -441,14 +436,13 @@
             const target = document.getElementById(viewId);
             target.classList.remove('hidden');
             target.classList.add('flex-1');
-            target.scrollTop = 0; // 切换视图时回到顶部
+            target.scrollTop = 0; 
             
             const cartBar = document.getElementById('bottom-cart-bar');
             if(viewId === 'pdf-view' || viewId === 'poster-summary-view') cartBar.classList.add('hidden');
             else cartBar.classList.remove('hidden');
         }
 
-        // 画报一层
         function openPosterSummary(storeName) {
             document.getElementById('poster-summary-title').innerText = storeName;
             const container = document.getElementById('poster-summary-container');
@@ -545,7 +539,6 @@
             renderData();
         }
 
-        // ================= 购物车 & 收藏 =================
         function toggleFavorite(id, e) {
             if(e) e.stopPropagation();
             if (favoriteItems.has(id)) favoriteItems.delete(id); else favoriteItems.add(id);
@@ -606,7 +599,6 @@
             }
             
             let total = 0;
-            // 按超市分组
             let storesData = {};
             shoppingCart.forEach(item => {
                 if(!storesData[item.store]) storesData[item.store] = [];
@@ -649,7 +641,7 @@
             document.getElementById('cart-total-price').innerText = total.toFixed(2) + ' kr';
         }
 
-        // ================= 详情弹窗 =================
+        // ================= 弹窗详情（标签尺寸统一） =================
         function openDetail(id) {
             const p = products.find(i => i.id === id);
             if(!p) return;
@@ -659,7 +651,9 @@
             
             const colorClass = getDiscountStyle(p.discount || "");
             const historyTag = p.history_low ? `<div class="bg-teal-50 border border-teal-200 p-3 rounded-xl mt-4 flex items-center justify-between"><span class="text-[13px] text-[#064E3B] font-bold">📈 历史价格对比</span><span class="bg-[#064E3B] text-white text-[10px] px-2 py-1 rounded shadow-sm">平30天史低</span></div>` : '';
-            const memberTag = p.is_member ? `<span class="bg-[#D4AF37] text-white text-[10px] px-2.5 py-1.5 rounded shadow-sm ml-2 font-bold">会员</span>` : '';
+            
+            // 会员金底白字，大小内边距与超市/折扣标签严格一致
+            const memberTag = p.is_member ? `<span class="bg-[#D4AF37] text-white text-[12px] px-2.5 py-1.5 rounded shadow-md font-bold">会员</span>` : '';
             const frozenTag = p.is_frozen ? frozenSVG : '';
 
             card.innerHTML = `
@@ -667,9 +661,9 @@
                     <img src="https://placehold.co/600x400/E2E8F0/94A3B8?text=Product+Details" class="w-full h-full object-cover"/>
                     <button onclick="closeDetail()" class="absolute top-4 right-4 w-9 h-9 bg-black/50 text-white rounded-full flex items-center justify-center backdrop-blur hover:bg-black/70 transition-colors"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
                     <div class="absolute bottom-4 left-4 flex space-x-1.5 items-center">
-                        <span class="bg-white/95 text-[#8A151B] font-black text-[13px] px-3 py-1.5 rounded shadow-md">${p.store}</span>
+                        <span class="bg-white/95 text-[#8A151B] font-black text-[12px] px-2.5 py-1.5 rounded shadow-md">${p.store}</span>
                         ${memberTag}
-                        <span class="${colorClass} font-bold text-[12px] px-2.5 py-1.5 rounded shadow-md ml-1">${p.discount}</span>
+                        <span class="${colorClass} font-bold text-[12px] px-2.5 py-1.5 rounded shadow-md">${p.discount}</span>
                     </div>
                 </div>
                 <div class="p-6">
@@ -698,7 +692,7 @@
             setTimeout(() => overlay.classList.remove('open'), 200);
         }
 
-        // ================= 统一渲染引擎 =================
+        // ================= 核心过滤引擎 =================
         function renderData() {
             let baseData = products.filter(p => (p.week || 'this') === currentWeek);
             
@@ -719,7 +713,21 @@
                 if(btn) btn.className = !availableStores.has(s) ? "px-3 py-1 bg-gray-100 text-gray-300 border border-transparent text-[11px] font-medium rounded-full flex-shrink-0 pointer-events-none" : (selectedStores.has(s) ? active : inactive);
             });
 
-            // 主页精选
+            // 1. 特别关心展示逻辑 (主页，永久展示区域)
+            const favSection = document.getElementById('home-fav-section');
+            if(!searchQuery) {
+                favSection.classList.remove('hidden');
+                const homeFav = baseData.filter(p => favoriteItems.has(p.id));
+                if(homeFav.length > 0) {
+                    document.getElementById('home-fav-container').innerHTML = homeFav.map(p => createCardHTML(p)).join('');
+                } else {
+                    document.getElementById('home-fav-container').innerHTML = `<div class="col-span-2 text-center text-gray-400 text-[12px] py-6 bg-white rounded-xl border border-gray-100">暂无特别关心商品</div>`;
+                }
+            } else {
+                favSection.classList.add('hidden'); // 搜索时隐藏
+            }
+
+            // 2. 精选逻辑
             const homeFeatured = baseData.filter(p => {
                 if(!featuredStores.has(p.store)) return false;
                 let val = parseInt((p.discount||"").replace(/[^\d]/g, ''));
@@ -735,7 +743,7 @@
                 homeContainer.innerHTML = homeFeatured.slice(0, 4).map(p => createCardHTML(p)).join('');
             }
 
-            // 全量页
+            // 3. 全量页过滤
             let filtered = selectedStores.size > 0 ? baseData.filter(p => selectedStores.has(p.store)) : baseData;
 
             if (currentCategory === '特别关心') {
