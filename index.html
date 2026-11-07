@@ -478,7 +478,10 @@
                     <div class="absolute top-1.5 right-1.5 ${colorClass} ${badgeBase} z-10">${p.discount || '特价'}</div>
                     
                     <div class="h-32 bg-gray-50 w-full relative shrink-0">
-                        <img src="https://placehold.co/400x300/E2E8F0/94A3B8?text=Image" class="w-full h-full object-cover" alt="img"/>
+                        <img src="${p.image_url || 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=600&q=80'}" 
+     class="w-full h-full object-cover" 
+     alt="img"
+     onerror="this.src='https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=600&q=80'" />
                         <div class="absolute bottom-1.5 left-1.5 flex items-center space-x-1">
                             <!-- 外层卡片仅显示统一超市品牌名称 -->
                             <span class="bg-white/95 backdrop-blur text-[#8A151B] ${badgeBase}">${p.store}</span>
