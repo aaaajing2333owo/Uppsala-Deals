@@ -791,7 +791,10 @@
 
             card.innerHTML = `
                 <div class="relative w-full h-64 bg-gray-100">
-                    <img src="https://placehold.co/600x400/E2E8F0/94A3B8?text=Product+Details" class="w-full h-full object-cover"/>
+                    <img src="${p.image_url || 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=600&q=80'}" 
+     class="w-full h-full object-cover" 
+     alt="details"
+     onerror="this.src='https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=600&q=80'" />
                     <button onclick="closeDetail()" class="absolute top-4 right-4 w-9 h-9 bg-black/50 text-white rounded-full flex items-center justify-center backdrop-blur hover:bg-black/70 transition-colors"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
                     <!-- 详情页展示完整超市分店名，且三个标签高度字号完全一致 -->
                     <div class="absolute bottom-4 left-4 right-4 flex flex-wrap gap-1.5 items-center">
