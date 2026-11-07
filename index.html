@@ -62,6 +62,13 @@
                 </section>
 
                 <!-- 精选 -->
+                <!-- 浏览全部打折商品入口 (挪至精选上方) -->
+                <button onclick="switchView('all-items-view')" class="w-full py-2.5 border border-[#8A151B] text-[#8A151B] font-bold text-[12px] rounded-xl flex items-center justify-center space-x-1 bg-white shadow-sm active:bg-[#8A151B] active:text-white transition-colors">
+                    <span>浏览全部打折商品</span>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </button>
+
+                <!-- 精选 -->
                 <section>
                     <div class="flex justify-between items-end mb-2">
                         <div class="flex items-center space-x-1.5">
@@ -73,11 +80,6 @@
                     </div>
                     <div id="home-products-container" class="grid grid-cols-2 gap-2"></div>
                     <div id="home-empty-state" class="hidden text-center text-gray-400 text-[12px] py-8 bg-white rounded-xl border border-gray-100">暂无符合条件的精选数据</div>
-                    
-                    <button onclick="switchView('all-items-view')" class="w-full mt-3 py-2.5 border border-[#8A151B] text-[#8A151B] font-bold text-[12px] rounded-xl flex items-center justify-center space-x-1 bg-white shadow-sm active:bg-[#8A151B] active:text-white transition-colors">
-                        <span>浏览全部打折商品</span>
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                    </button>
                 </section>
 
                 <!-- 特别关心 -->
@@ -97,7 +99,7 @@
                     <button onclick="switchView('home-view')" class="text-white p-1 -ml-1 active:bg-white/10 rounded-full transition-colors">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
                     </button>
-                    <h1 class="text-[17px] font-black tracking-tight flex-1">全部折扣</h1>
+                    <h1 class="text-[17px] font-black tracking-tight flex-1">全部折扣商品</h1>
                 </div>
                 <div class="flex overflow-x-auto no-scrollbar space-x-4 pb-2 text-[13px] font-medium" id="category-tabs">
                     <button onclick="setCategory('精选', this)" class="category-btn text-white font-bold whitespace-nowrap border-b-2 border-white pb-1">精选</button>
@@ -126,7 +128,6 @@
                     </div>
                     
                     <div class="flex items-center space-x-3 text-gray-500 font-medium bg-gray-100 px-2 py-1 rounded-full">
-                        <button onclick="setSort('default')" id="sort-btn-default" class="text-[#8A151B] font-bold">综合</button>
                         <button onclick="setCategory('特别关心', this)" id="sort-btn-fav" class="text-gray-500">特别关心</button>
                         <button onclick="setSort('discount')" id="sort-btn-discount" class="flex items-center space-x-0.5"><span>折扣</span><span id="sort-icon-discount" class="text-[9px]">↓</span></button>
                         <button onclick="setSort('price')" id="sort-btn-price" class="flex items-center space-x-0.5"><span>价格</span><span id="sort-icon-price" class="text-[9px]">↓</span></button>
@@ -612,7 +613,7 @@
             if (currentSort === type && type !== 'default') sortOrder = sortOrder === 'desc' ? 'asc' : 'desc';
             else { currentSort = type; sortOrder = type === 'price' ? 'asc' : 'desc'; }
 
-            ['default', 'discount', 'price'].forEach(t => {
+            ['discount', 'price'].forEach(t => {
                 const btn = document.getElementById(`sort-btn-${t}`);
                 if(t === 'default') btn.className = currentSort === t ? "text-[#8A151B] font-bold" : "text-gray-500";
                 else {
