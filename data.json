@@ -1,23 +1,283 @@
-[
-  {
-    "store": "ICA",
-    "discount": "-30%",
-    "name": "冷鲜鸡胸肉",
-    "specs": "约 1kg / 盒",
-    "currentPrice": "79"
+{
+  "updated_at": "2026-11-07T00:36:54.604214",
+  "report": [
+    {
+      "title": "特别关心与史低监测",
+      "content": "监测到 Hemköp Svava 的 Garant 冷鲜牛绞肉 12% 降至 89.0 kr/800g，触及 30 天内历史低点。"
+    },
+    {
+      "title": "全城深度折扣洞察",
+      "content": "本周全城最高折扣出现在 ICA Supermarket Luthagens Livs，冷冻剥壳大虾 录得 -45% 深度降价 (ง •_•)ง"
+    },
+    {
+      "title": "时令与门店贴士",
+      "content": "乌普萨拉市中心 6 大主流商超（含 ICA、Hemköp、Willys 各分店）本周生鲜与乳品价格差异明显，建议采购前通过分店筛选栏多维比价 ^_^"
+    }
+  ],
+  "posters": {
+    "ICA": [
+      {
+        "title": "ICA Supermarket Torgkassen",
+        "valid": "11/04 - 11/10",
+        "preview": "https://placehold.co/600x400/8A151B/FFFFFF?text=ICA+Torgkassen",
+        "url": "https://ereklamblad.se/"
+      },
+      {
+        "title": "ICA Supermarket Luthagens Livs",
+        "valid": "11/04 - 11/10",
+        "preview": "https://placehold.co/600x400/8A151B/FFFFFF?text=ICA+Luthagen",
+        "url": "https://ereklamblad.se/"
+      },
+      {
+        "title": "ICA Kvantum Ekonomikum",
+        "valid": "11/04 - 11/10",
+        "preview": "https://placehold.co/600x400/8A151B/FFFFFF?text=ICA+Ekonomikum",
+        "url": "https://ereklamblad.se/"
+      }
+    ],
+    "HEMKÖP": [
+      {
+        "title": "Hemköp Svava",
+        "valid": "11/04 - 11/10",
+        "preview": "https://placehold.co/600x400/D9383A/FFFFFF?text=Hemkop+Svava",
+        "url": "https://ereklamblad.se/"
+      },
+      {
+        "title": "Hemköp Kvarnen",
+        "valid": "11/04 - 11/10",
+        "preview": "https://placehold.co/600x400/D9383A/FFFFFF?text=Hemkop+Kvarnen",
+        "url": "https://ereklamblad.se/"
+      }
+    ],
+    "WILLYS": [
+      {
+        "title": "Willys Kungsgatan",
+        "valid": "11/04 - 11/10",
+        "preview": "https://placehold.co/600x400/1F2937/FFFFFF?text=Willys+Kungsgatan",
+        "url": "https://ereklamblad.se/"
+      },
+      {
+        "title": "Willys Vaksalagatan",
+        "valid": "11/04 - 11/10",
+        "preview": "https://placehold.co/600x400/1F2937/FFFFFF?text=Willys+Vaksalagatan",
+        "url": "https://ereklamblad.se/"
+      }
+    ],
+    "LIDL": [
+      {
+        "title": "Lidl Bredgränd",
+        "valid": "11/04 - 11/10",
+        "preview": "https://placehold.co/600x400/1D4ED8/FFFFFF?text=Lidl+Bredgrand",
+        "url": "https://ereklamblad.se/"
+      }
+    ],
+    "COOP": [
+      {
+        "title": "Coop Konsum S:t Per",
+        "valid": "11/04 - 11/10",
+        "preview": "https://placehold.co/600x400/064E3B/FFFFFF?text=Coop+St+Per",
+        "url": "https://ereklamblad.se/"
+      }
+    ],
+    "CITY GROSS": [
+      {
+        "title": "City Gross Boländerna",
+        "valid": "11/04 - 11/10",
+        "preview": "https://placehold.co/600x400/B45309/FFFFFF?text=City+Gross+Bolanderna",
+        "url": "https://ereklamblad.se/"
+      }
+    ]
   },
-  {
-    "store": "WILLYS",
-    "discount": "-25%",
-    "name": "网袋土豆",
-    "specs": "3kg / 袋",
-    "currentPrice": "29"
-  },
-  {
-    "store": "HEMKÖP",
-    "discount": "超值",
-    "name": "红提",
-    "specs": "500g / 盒",
-    "currentPrice": "25"
-  }
-]
+  "products": [
+    {
+      "id": "ica_1",
+      "store": "ICA",
+      "branch": "ICA Supermarket Torgkassen",
+      "name": "冷鲜鸡胸肉",
+      "name_sv": "Kycklingbröstfilé Kronfågel",
+      "category": "肉禽蛋",
+      "is_frozen": false,
+      "is_member": true,
+      "is_bulk": false,
+      "discount": "-34%",
+      "currentPrice": 79.0,
+      "originalPrice": 119.0,
+      "unit": "850g",
+      "unit_price": "92.94 kr/kg",
+      "week": "this",
+      "is_new": true,
+      "history_low": false
+    },
+    {
+      "id": "ica_2",
+      "store": "ICA",
+      "branch": "ICA Supermarket Luthagens Livs",
+      "name": "冷冻剥壳大虾",
+      "name_sv": "Frysta Skalman Räkor",
+      "category": "水产海鲜",
+      "is_frozen": true,
+      "is_member": true,
+      "is_bulk": false,
+      "discount": "-45%",
+      "currentPrice": 55.0,
+      "originalPrice": 99.0,
+      "unit": "500g",
+      "unit_price": "110.00 kr/kg",
+      "week": "this",
+      "is_new": true,
+      "history_low": false
+    },
+    {
+      "id": "ica_3",
+      "store": "ICA",
+      "branch": "ICA Kvantum Ekonomikum",
+      "name": "有机鸡蛋 15枚",
+      "name_sv": "Ekologiska Ägg 15-pack",
+      "category": "肉禽蛋",
+      "is_frozen": false,
+      "is_member": false,
+      "is_bulk": false,
+      "discount": "-28%",
+      "currentPrice": 39.9,
+      "originalPrice": 55.0,
+      "unit": "盒",
+      "unit_price": "2.66 kr/st",
+      "week": "this",
+      "is_new": true,
+      "history_low": false
+    },
+    {
+      "id": "hem_1",
+      "store": "HEMKÖP",
+      "branch": "Hemköp Svava",
+      "name": "Garant 冷鲜牛绞肉 12%",
+      "name_sv": "Nötfärs 12% Garant",
+      "category": "肉禽蛋",
+      "is_frozen": false,
+      "is_member": true,
+      "is_bulk": false,
+      "discount": "-22%",
+      "currentPrice": 89.0,
+      "originalPrice": 115.0,
+      "unit": "800g",
+      "unit_price": "111.25 kr/kg",
+      "week": "this",
+      "history_low": true,
+      "is_new": true
+    },
+    {
+      "id": "hem_2",
+      "store": "HEMKÖP",
+      "branch": "Hemköp Kvarnen",
+      "name": "瑞典鲜牛奶 3%",
+      "name_sv": "Lättmjölk 3% Arla",
+      "category": "乳品饮料",
+      "is_frozen": false,
+      "is_member": false,
+      "is_bulk": false,
+      "discount": "-15%",
+      "currentPrice": 16.9,
+      "originalPrice": 19.9,
+      "unit": "1.5L",
+      "unit_price": "11.26 kr/L",
+      "week": "this",
+      "is_new": true,
+      "history_low": false
+    },
+    {
+      "id": "wil_1",
+      "store": "WILLYS",
+      "branch": "Willys Kungsgatan",
+      "name": "本地红皮土豆",
+      "name_sv": "Svensk Potatis Lösvikt",
+      "category": "时令果蔬",
+      "is_frozen": false,
+      "is_member": false,
+      "is_bulk": true,
+      "discount": "-40%",
+      "currentPrice": 9.9,
+      "originalPrice": 16.5,
+      "unit": "kg",
+      "unit_price": "9.90 kr/kg",
+      "week": "this",
+      "is_new": true,
+      "history_low": false
+    },
+    {
+      "id": "wil_2",
+      "store": "WILLYS",
+      "branch": "Willys Vaksalagatan",
+      "name": "Fazer 夹心面包",
+      "name_sv": "Rågkusar Fazer",
+      "category": "烘焙面包",
+      "is_frozen": false,
+      "is_member": false,
+      "is_bulk": false,
+      "discount": "-20%",
+      "currentPrice": 24.0,
+      "originalPrice": 30.0,
+      "unit": "500g",
+      "unit_price": "48.00 kr/kg",
+      "week": "this",
+      "is_new": true,
+      "history_low": false
+    },
+    {
+      "id": "lid_1",
+      "store": "LIDL",
+      "branch": "Lidl Bredgränd",
+      "name": "冰鲜三文鱼排",
+      "name_sv": "Färsk Laxfilé 4-pack",
+      "category": "水产海鲜",
+      "is_frozen": false,
+      "is_member": false,
+      "is_bulk": false,
+      "discount": "-31%",
+      "currentPrice": 99.0,
+      "originalPrice": 145.0,
+      "unit": "500g",
+      "unit_price": "198.00 kr/kg",
+      "week": "this",
+      "history_low": true,
+      "is_new": true
+    },
+    {
+      "id": "coo_1",
+      "store": "COOP",
+      "branch": "Coop Konsum S:t Per",
+      "name": "Oatly 咖啡大师燕麦奶",
+      "name_sv": "iKaffe Havredryck Oatly",
+      "category": "乳品饮料",
+      "is_frozen": false,
+      "is_member": true,
+      "is_bulk": false,
+      "discount": "-25%",
+      "currentPrice": 18.0,
+      "originalPrice": 24.0,
+      "unit": "1L",
+      "unit_price": "18.00 kr/L",
+      "week": "this",
+      "is_new": true,
+      "history_low": false
+    },
+    {
+      "id": "cit_1",
+      "store": "CITY GROSS",
+      "branch": "City Gross Boländerna",
+      "name": "瑞典皇冠猪梅花肉",
+      "name_sv": "Fläskkarré Benfri Lösvikt",
+      "category": "肉禽蛋",
+      "is_frozen": false,
+      "is_member": false,
+      "is_bulk": true,
+      "discount": "-42%",
+      "currentPrice": 69.9,
+      "originalPrice": 119.0,
+      "unit": "kg",
+      "unit_price": "69.90 kr/kg",
+      "week": "this",
+      "is_new": true,
+      "history_low": false
+    }
+  ]
+}
